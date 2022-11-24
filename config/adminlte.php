@@ -274,17 +274,17 @@ return [
             'text'        => 'Gestión de Repositorio',
             'icon'        => 'fas fa-fw fa-graduation-cap',
             'icon_color'  => 'white',
-            'can'  => ['admin'],
             'submenu' => [
                 [
                     'text' => 'Gestión de Documentos',
                     'url'  => 'admin/documentos',
-                ],
-               /*  [
-                    'text' => 'Gestión de Plantillas',
-                    'url'  => 'admin/plantillas',
+                    'can'  => ['admin'],
                 ],
                 [
+                    'text' => 'Gestión de Plantillas Word',
+                    'url'  => 'admin/plantillas',
+                ],
+                /*[
                     'text' => 'Bandeja de entrada',
                     'url'  => 'admin/bandeja-entrada',
                 ], */
@@ -304,6 +304,10 @@ return [
                     'text' => 'Documentos Históricos',
                     'url'  => 'admin/documentos-historicos',
                     'can'  => ['admin'],
+                ],
+                [
+                    'text' => 'Vista de Plantillas Word',
+                    'url'  => 'admin/vista-documentos',
                 ],
 
             ]

@@ -111,7 +111,7 @@
               </div>
 
               <div class="form-group row">
-                <label for="txtobs_elaboracion" class="col-sm-2 col-form-label">Observación del del Documento</label>
+                <label for="txtobs_elaboracion" class="col-sm-2 col-form-label">Observación del Documento</label>
                 <div class="col-sm-10">
                   <textarea class="form-control" rows="4" placeholder="Ingrese Observación ..." id="txtobs_elaboracion" v-model="fillobject.obs_elaboracion"></textarea>
                 </div>

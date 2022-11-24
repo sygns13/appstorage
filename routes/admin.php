@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\AreaController;
 use App\Http\Controllers\Admin\TipoDocumentoController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DocumentoController;
+use App\Http\Controllers\Admin\PlantillaController;
 
 
 use App\Http\Controllers\Admin\ReportPDFController;
@@ -27,7 +28,7 @@ Route::middleware([
     Route::get('/tipo-documentos', [TipoDocumentoController::class, 'index1'])->name('tipo-documentos');
     Route::get('/usuarios', [UserController::class, 'index1'])->name('usuarios');
     Route::get('/documentos', [DocumentoController::class, 'index1'])->name('documentos');
-    Route::get('/plantillas', [AreaController::class, 'index1'])->name('plantillas');
+    Route::get('/plantillas', [PlantillaController::class, 'index1'])->name('plantillas');
     Route::get('/bandeja-entrada', [AreaController::class, 'index1'])->name('bandeja-entrada');
     Route::get('/vista-documentos', [DocumentoController::class, 'index2'])->name('vista-documentos');
     Route::get('/documentos-historicos', [DocumentoController::class, 'index3'])->name('documentos-historicos');
@@ -40,6 +41,7 @@ Route::middleware([
     Route::resource('/retipo-documentos', TipoDocumentoController::class);
     Route::resource('/reusuarios', UserController::class);
     Route::resource('/redocumentos', DocumentoController::class);
+    Route::resource('/replantillas', PlantillaController::class);
 
     Route::get('/reusuarios/altabaja/{id}/{var}',[UserController::class, 'altabaja'])->name('altabajausuario');
 

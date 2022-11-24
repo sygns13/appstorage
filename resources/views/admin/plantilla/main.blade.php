@@ -3,7 +3,11 @@
         <div class="col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Gestión de Documentos</h3>
+                  @if(Auth::user()->tipo_user_id == 1)
+                    <h3 class="card-title">Gestión de Plantillas de Documentos</h3>
+                  @else
+                    <h3 class="card-title">Gestión de Plantillas de Documentos del Área: {{$area->nombre}} - {{$area->codigo}}</h3>
+                  @endif
                   <a v-if="!divFormularioDetalles" style="float: right; padding: all; color: black;" type="button" class="btn btn-default btn-sm" href="{{URL::to('admin')}}"><i class="fa fa-reply-all" aria-hidden="true"></i> 
                     Volver</a>
 
@@ -22,13 +26,17 @@
               </div>
         </div>
 
-        @include('admin.documento.form')
-        @include('admin.documento.formv')
+        @include('admin.plantilla.form')
+
 
         <div class="col-md-12" v-if="!divFormularioDetalles">
             <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Listado de Documentos</h3>
+                  @if(Auth::user()->tipo_user_id == 1)
+                    <h3 class="card-title">Listado de Plantillas de Documentos</h3>
+                  @else
+                    <h3 class="card-title">Listado de Plantillas de Documentos del Área: {{$area->nombre}} - {{$area->codigo}}</h3>
+                  @endif
                 </div>
                 <form>
                   <div class="card-body">
@@ -46,15 +54,13 @@
                             <thead>
                                 <tr>
                                     <th class="titles-table" style="width: 5%">#</th>
-                                    <th class="titles-table" style="width: 12%">Área del Documento</th>
-                                    <th class="titles-table" style="width: 12%">Tipo de Documento</th>
-                                    <th class="titles-table" style="width: 13%">Nombre del Documento</th>
+                                    <th class="titles-table" style="width: 15%">Área</th>
+                                    <th class="titles-table" style="width: 15%">Tipo de Documento</th>
+                                    <th class="titles-table" style="width: 15%">Nombre</th>
                                     <th class="titles-table" style="width: 10%">Código</th>
-                                    <th class="titles-table" style="width: 7%">Versión Actual</th>
-                                    <th class="titles-table" style="width: 7%">Revisión Actual</th>
-                                    <th class="titles-table" style="width: 12%">Estado</th>
-                                    <th class="titles-table" style="width: 10%">Fecha de Elaboración</th>
-                                    <th class="titles-table" style="width: 13%">Gestión</th>
+                                    <th class="titles-table" style="width: 8%">Fecha</th>
+                                    <th class="titles-table" style="width: 15%">Documento Relacionado</th>
+                                    <th class="titles-table" style="width: 15%">Gestión</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -64,44 +70,22 @@
                                     <td class="rows-table">@{{registro.tipo_documentos_nombre}}</td>
                                     <td class="rows-table">@{{registro.nombre}}</td>
                                     <td class="rows-table">@{{registro.codigo}}</td>
-                                    <td class="rows-table">@{{registro.version_actual}}</td>
-                                    <td class="rows-table">@{{registro.revision}}</td>
-                                    <td class="rows-table" style="font-weight: bold;">
-                                      <template v-if="registro.estado == '0'">BORRADOR GENERADO</template>
-                                      <template v-if="registro.estado == '1'">BORRADOR APROBADO POR RED</template>
-                                      <template v-if="registro.estado == '2'">BORRADOR OBSERVADO POR RED</template>
-                                      <template v-if="registro.estado == '3'">BORRADOR CORREGIDO</template>
-                                      <template v-if="registro.estado == '4'">DOCUMENTO FIRMADO POR ÁREA DE ELABORACIÓN</template>
-                                      <template v-if="registro.estado == '5'">DOCUMENTO FIRMADO POR ÁREA DE EVALUACIÓN</template>
-                                      <template v-if="registro.estado == '6'">DOCUMENTO OBSERVADO POR ÁREA DE EVALUACIÓN</template>
-                                      <template v-if="registro.estado == '7'">DOCUMENTO FIRMADO POR ÁREA DE APROBACIÓN</template>
-                                      <template v-if="registro.estado == '8'">DOCUMENTO OBSERVADO POR ÁREA DE APROBACIÓN</template>
-                                      <template v-if="registro.estado == '9'">DOCUMENTO VÁLIDO, VERSIÓN EMITIDA</template>
-
-                                    </td>
-
                                     <td class="rows-table">@{{registro.fecha_ela}}</td>
-                                    {{-- <td class="rows-table">
-                                      <template v-if="registro.id_documento_relacionado != '0'">
-                                        @{{registro.nombre_documento_relacionado}} - @{{registro.codigo_documento_relacionado}} Ver @{{registro.version_actual_documento_relacionado}} Rev @{{registro.revision_documento_relacionado}}
-                                      </template>
-                                    </td> --}}
-                                    <td>
+                                    <td class="rows-table">@{{registro.nombre_documento_relacionado}}</td>
+                                    <td class="rows-table">
                                         <center>
-                                          {{-- <template v-if="registro.estado == '0'"> --}}
-                                            <x-adminlte-button @click="up(registro)" id="btnUp" class="bg-gradient btn-sm" type="button" label="" theme="primary" icon="fas fa-arrow-up"
-                                            data-placement="top" data-toggle="tooltip" title="Nueva Versión o Revisión"/>
 
+                   
+                                          <a :href="'{{ asset('/plantillas/')}}'+'/'+registro.ubicacion_electronica+'/'+registro.nombre_electronico" download>
+                                          <x-adminlte-button  id="btnDescargar" class="bg-gradient btn-sm" type="button" label="" theme="info" icon="fas fa-download"
+                                            data-placement="top" data-toggle="tooltip" title="Descargar Plantilla de Documento" style="margin-left: 5px;"/> </a>
 
                                             <x-adminlte-button @click="edit(registro)" id="btnEdit" class="bg-gradient btn-sm" type="button" label="" theme="warning" icon="fas fa-edit"
                                             data-placement="top" data-toggle="tooltip" title="Editar Documento" style="margin-left: 5px;"/>
 
                                             <x-adminlte-button @click="borrar(registro)" id="btnBorrar" class="bg-gradient btn-sm" type="button" label="" theme="danger" icon="fas fa-trash"
                                             data-placement="top" data-toggle="tooltip" title="Eliminar Documento" style="margin-left: 5px;"/>
-                                          {{-- </template> --}}
-
-                                          <x-adminlte-button @click="detalles(registro)" id="btnDetalles" class="bg-gradient btn-sm" type="button" label="" theme="info" icon="fas fa-search"
-                                            data-placement="top" data-toggle="tooltip" title="Ver Detalles de Documento" style="margin-left: 5px;"/>
+                                          
                                         </center>
                                     </td>
                                 </tr>
