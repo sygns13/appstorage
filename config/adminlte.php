@@ -307,7 +307,7 @@ return [
                 ],
                 [
                     'text' => 'Vista de Plantillas Word',
-                    'url'  => 'admin/vista-documentos',
+                    'url'  => 'admin/vista-plantillas',
                 ],
 
             ]

@@ -31,6 +31,7 @@ Route::middleware([
     Route::get('/plantillas', [PlantillaController::class, 'index1'])->name('plantillas');
     Route::get('/bandeja-entrada', [AreaController::class, 'index1'])->name('bandeja-entrada');
     Route::get('/vista-documentos', [DocumentoController::class, 'index2'])->name('vista-documentos');
+    Route::get('/vista-plantillas', [PlantillaController::class, 'index2'])->name('vista-plantillas');
     Route::get('/documentos-historicos', [DocumentoController::class, 'index3'])->name('documentos-historicos');
     Route::get('/lista-maestra', [AreaController::class, 'index1'])->name('lista-maestra');
     Route::get('/matriz-distribucion', [AreaController::class, 'index1'])->name('matriz-distribucion');
@@ -49,6 +50,8 @@ Route::middleware([
     Route::post('/postVersionDoc',[DocumentoController::class, 'postVersionDoc'])->name('postVersionDoc');
 
     Route::get('/gethistoricos',[DocumentoController::class, 'gethistoricos'])->name('gethistoricos');
+
+    Route::get('/getrepoplantillas',[PlantillaController::class, 'getrepoplantillas'])->name('getrepoplantillas');
 
 
     /* Route::resource('/resecciones', SeccionesController::class);

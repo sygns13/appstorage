@@ -40,9 +40,28 @@ class PlantillaController extends Controller
         return view('admin.plantilla.index', compact('tipoDocumentos', 'documentos', 'id_area', 'area', 'areas'));
     }
 
+    public function index2()
+    {
+        $tipoDocumentos = TipoDocumento::where('activo', Constantes::REGISTRO_ACTIVO)->where('borrado', Constantes::REGISTRO_NO_BORRADO)->orderBy('id')->get();
+        $areas = Area::where('activo', Constantes::REGISTRO_ACTIVO)->where('borrado', Constantes::REGISTRO_NO_BORRADO)->orderBy('id')->get();
+
+        $documentos = Documento::where('borrado', Constantes::REGISTRO_NO_BORRADO)->where('activo', Constantes::REGISTRO_ACTIVO)->where('estado', Constantes::ESTADO_DOCUMENTO_EMITIDO)->orderBy('tipo_documento_id')->orderBy('id')->get();
+        $id_area=Auth::user()->area_id;
+
+        $area = Area::find($id_area);
+
+        return view('admin.repoplantilla.index', compact('tipoDocumentos', 'documentos', 'id_area', 'area', 'areas'));
+    }
+
     public function index(Request $request)
     {
         $response = Plantilla::GetRegistros($request);
+        return $response;
+    }
+
+    public function getrepoplantillas(Request $request)
+    {
+        $response = Plantilla::GetRegistrosRepositorio($request);
         return $response;
     }
 
